@@ -18,22 +18,29 @@
     @media screen and (max-width: 1200px) {
       flex-direction: column;
       align-items: center;
+      padding: 2rem;
     }
   
     &-info {
-      flex: 0.65;
+      flex: 0.7;
       margin-right: 2rem;
   
       .head-text {
         font-size: 2.5rem;
         margin-bottom: 1rem;
+        @media screen and (max-width: 1200px) {
+            font-size: 1rem;
+        }
       }
   
       .sub-heading {
         font-size: 1.5rem;
         margin-top: 2rem;
         margin-bottom: 1rem;
-        color: var(--secondary-color);
+        color: var(--tertiary-color);
+        @media screen and (max-width: 1200px) {
+            font-size: 1rem;
+        }
       }
   
       .p-text {
@@ -70,6 +77,9 @@
   
           .member-name {
             font-weight: bold;
+            @media screen and (max-width: 1200px) {
+                font-size: 1rem;
+            }
           }
   
           .member-role {

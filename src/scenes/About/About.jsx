@@ -38,17 +38,17 @@ const About = () => {
         <h2 className="sub-heading">Meet the Team</h2>
         <div className="team">
           <div className="team-member">
-            <img src={images.teamMember1} alt="Team Member 1" />
+            <img src={images.member} alt="Team Member 1" />
             <h3 className="member-name">John Doe</h3>
             <p className="member-role">Co-Founder & Developer</p>
           </div>
           <div className="team-member">
-            <img src={images.teamMember2} alt="Team Member 2" />
+            <img src={images.member} alt="Team Member 2" />
             <h3 className="member-name">Jane Smith</h3>
             <p className="member-role">Co-Founder & Designer</p>
           </div>
           <div className="team-member">
-            <img src={images.teamMember3} alt="Team Member 3" />
+            <img src={images.member} alt="Team Member 3" />
             <h3 className="member-name">Alex Johnson</h3>
             <p className="member-role">Marketing Specialist</p>
           </div>
@@ -60,7 +60,7 @@ const About = () => {
         transition={{ duration: 0.5 }}
         className="app__about-image"
       >
-        <img src={images.aboutImage} alt="About Us" className="about-image" />
+        <img src={images.students} alt="About Us" className="about-image" />
       </motion.div>
     </div>
   );

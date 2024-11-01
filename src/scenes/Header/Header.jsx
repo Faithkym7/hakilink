@@ -27,7 +27,12 @@ const Header = () => {
           </div>
         </div>
 
-        <button className="get-help-button">Get Help</button>
+        <div className="get-help">
+          <a href="#contact">
+            <button className="get-help-button">Get Help</button>
+          </a>
+        </div>
+
       </motion.div>
 
       {/* Profile Image */}
