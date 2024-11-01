@@ -1,0 +1,152 @@
+#home {
+  position: relative;
+  background-color: #f7fcfd;
+  background-size: cover;
+  background-repeat: repeat;
+  background-position: center;
+
+  .app__wrapper {
+    padding: 0;
+
+    .copyright {
+      display: none;
+    }
+  }
+}
+
+.app__header {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  flex-direction: row;
+  padding: 5rem 2rem;
+
+  // Add margin reset to remove gap on smaller screens
+  margin-top: 0; // Ensure no margin at the top
+
+  @media screen and (min-width: 1200px) {
+    flex-direction: row;
+  }
+
+  @media screen and (max-width: 1200px) {
+    
+    align-items: center;
+    padding: 2rem 0; // Adjust padding for smaller screens
+    margin-top: 0; // Ensure no margin at the top
+  }
+}
+
+.app__header-info {
+  flex: 0.65;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  
+  margin: 0 2rem;
+  position: relative;
+  z-index: 1; // Ensures the text is on top of the image
+
+  @media screen and (max-width: 1200px) {
+    width: 100%;
+    align-items: center;
+    position: absolute; // Overlay positioning on smaller screens
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    text-align: center; // Center text on smaller screens
+  }
+}
+
+.app__header-badge {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start; // Align text to the left on larger screens
+  align-items: flex-start;
+  flex-direction: column;
+
+  .badge-cmp {
+    border-radius: 15px;
+    flex-direction: row;
+    width: auto;
+
+    span {
+      font-size: 2.5rem;
+
+      @media screen and (min-width: 2000px) {
+        font-size: 5rem;
+      }
+      @media screen and (max-width: 450px) {      
+        font-size: 1rem;
+      }
+    }
+    @media screen and (max-width: 450px) {
+      justify-content: center;
+      align-items: center;
+      }
+  }
+
+  .tagline {
+    flex-direction: column;
+    margin-top: 1rem; // Adjust spacing between elements
+
+    p {
+      width: 100%;
+      text-transform: none;
+      font-size: 2rem;
+      color: #444; // Color adjustment for better contrast
+
+      @media screen and (max-width: 450px) {
+        font-size: 0.5rem;
+      }
+    }
+
+    span {
+      color: var(--secondary-color);
+
+      @media screen and (max-width: 450px) {
+        font-size: 0.5rem;
+      }
+    }
+  }
+}
+
+.get-help-button {
+  margin-top: 1.5rem; // Space above the button
+  padding: 0.8rem 2rem;
+  background-color: var(--tertiary-color);
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: var(--secondary-color); 
+    color: #fff; // Darken effect on hover
+  }
+
+  @media screen and (max-width: 1200px) {
+    font-size: 1rem;
+  }
+  
+  @media screen and (max-width: 450px) {
+    font-size: 0.5rem;
+    margin-top: 0.5rem;
+  }
+}
+
+.app__header-img {
+  flex: 1;  
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  position: relative;
+
+  img {
+    width: 100%;
+    object-fit: cover; // Ensure image covers the area
+    z-index: 0; // Keep image behind the text
+  }
+}
