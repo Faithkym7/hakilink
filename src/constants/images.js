@@ -1,7 +1,9 @@
 import logo from '../assets/hakilink.jpeg';
 import hero from '../assets/hero.png';
 
-export default {
+const images =  {
     logo,
     hero
 };
+
+export default images;
