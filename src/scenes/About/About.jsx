@@ -38,12 +38,12 @@ const About = () => {
         <h2 className="sub-heading">Meet the Team</h2>
         <div className="team">
           <div className="team-member">
-            <img src={images.member} alt="Team Member 1" />
+            <img src={images.serene} alt="Team Member 1" />
             <h3 className="member-name">Serene Kimani</h3>
             <p className="member-role">Co-Founder & Team Lead </p>
           </div>
           <div className="team-member">
-            <img src={images.member} alt="Team Member 2" />
+            <img src={images.laura} alt="Team Member 2" />
             <h3 className="member-name">Laura Adeya</h3>
             <p className="member-role">Co-Founder </p>
           </div>

@@ -5,6 +5,9 @@ import member from '../assets/member.jpg';
 import educational from '../assets/educational.png';
 import email from '../assets/email.png';
 import mobile from '../assets/mobile.png';
+import laura from '../assets/Laura.jpeg';
+import serene from '../assets/Serene.jpeg';
+import care from '../assets/care.png';
 
 const images =  {
     logo,
@@ -13,7 +16,10 @@ const images =  {
     member,
     educational,
     email,
-    mobile
+    mobile,
+    laura, 
+    serene,
+    care
 };
 
 export default images;

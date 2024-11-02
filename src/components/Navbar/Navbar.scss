@@ -13,6 +13,12 @@
     border: 1px solid rgba(255, 255, 255, 0.18);
     position: fixed;
     z-index: 2;
+
+    @media screen and (max-width:1200px) {
+      .app__navbar-menu {
+        margin-left: auto;
+      }
+    }
   }
   
   .app__navbar-logo {
@@ -74,7 +80,10 @@
           background: var(--secondary-color);
         }
       }
+
     }
+
+    
   
     @media screen and (max-width: 900px) {
       display: none;
@@ -169,5 +178,41 @@
   
     @media screen and (min-width: 900px) {
       display: none;
+    }
+
+    button{
+      margin-bottom: 1rem;
+      width: 100px;
+      height: 50px;
+      border-radius: 25px;
+      border: none;
+      color: #fff;
+      background-color: var(--secondary-color);
+      &:hover {
+        background-color: var(--tertiary-color);
+      }
+    }
+  }
+
+  .app__navbar-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    button{
+      margin: 0 1rem;
+      width: 100px;
+      height: 50px;
+      border-radius: 25px;
+      border: none;
+      color: #fff;
+      background-color: var(--secondary-color);
+      &:hover {
+        background-color: var(--tertiary-color);
+      }
+
+      @media screen and (max-width: 900px) {
+        display: none;
+      }
     }
   }

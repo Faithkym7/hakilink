@@ -32,7 +32,7 @@
       .head-text {
         font-size: 2.5rem;
         margin-bottom: 1rem;
-        @media screen and (max-width: 1200px) {
+        @media screen and (max-width: 900px) {
             font-size: 1rem;
         }
       }
@@ -42,7 +42,7 @@
         margin-top: 2rem;
         margin-bottom: 1rem;
         color: var(--tertiary-color);
-        @media screen and (max-width: 1200px) {
+        @media screen and (max-width: 900px) {
             font-size: 1rem;
         }
       }
@@ -81,7 +81,7 @@
   
           .member-name {
             font-weight: bold;
-            @media screen and (max-width: 1200px) {
+            @media screen and (max-width: 900px) {
                 font-size: 1rem;
             }
           }
