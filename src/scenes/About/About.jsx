@@ -39,18 +39,38 @@ const About = () => {
         <div className="team">
           <div className="team-member">
             <img src={images.member} alt="Team Member 1" />
-            <h3 className="member-name">John Doe</h3>
-            <p className="member-role">Co-Founder & Developer</p>
+            <h3 className="member-name">Serene Kimani</h3>
+            <p className="member-role">Co-Founder & Team Lead </p>
           </div>
           <div className="team-member">
             <img src={images.member} alt="Team Member 2" />
-            <h3 className="member-name">Jane Smith</h3>
-            <p className="member-role">Co-Founder & Designer</p>
+            <h3 className="member-name">Laura Adeya</h3>
+            <p className="member-role">Co-Founder </p>
           </div>
           <div className="team-member">
             <img src={images.member} alt="Team Member 3" />
-            <h3 className="member-name">Alex Johnson</h3>
-            <p className="member-role">Marketing Specialist</p>
+            <h3 className="member-name">Mary Inviolata</h3>
+            <p className="member-role">Co-Founder </p>
+          </div>
+          <div className="team-member">
+            <img src={images.member} alt="Team Member 3" />
+            <h3 className="member-name">Grace Mutheu</h3>
+            <p className="member-role">Co-Founder </p>
+          </div>
+          <div className="team-member">
+            <img src={images.member} alt="Team Member 3" />
+            <h3 className="member-name">Bridgit Maeba</h3>
+            <p className="member-role">Co-Founder </p>
+          </div>
+          <div className="team-member">
+            <img src={images.member} alt="Team Member 3" />
+            <h3 className="member-name">Ann Kamau</h3>
+            <p className="member-role">Co-Founder </p>
+          </div>
+          <div className="team-member">
+            <img src={images.member} alt="Team Member 3" />
+            <h3 className="member-name">Mary Maina</h3>
+            <p className="member-role">Co-Founder </p>
           </div>
         </div>
       </motion.div>
