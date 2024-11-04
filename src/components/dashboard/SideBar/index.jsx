@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, Typography, Box, Avatar, IconButton } from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import ArticleIcon from '@mui/icons-material/Article';
-import PaymentIcon from '@mui/icons-material/Payment';
+import Diversity1Icon from '@mui/icons-material/Diversity1';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import PersonIcon from '@mui/icons-material/Person';
 import PeopleIcon from '@mui/icons-material/People';
-import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import WorkIcon from '@mui/icons-material/Work';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'; // Import ChevronLeftIcon
-import { shades } from '../../../theme';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { useNavigate, useLocation } from 'react-router-dom'; // Import useNavigate and useLocation
+import './Sidebar.scss'; // Import the SCSS file
 
 const Sidebar = ({ open, toggleSidebar }) => {
     const navigate = useNavigate(); // Initialize navigate
@@ -18,12 +18,12 @@ const Sidebar = ({ open, toggleSidebar }) => {
 
     const menuItems = [
         { text: 'Overview', icon: <DashboardIcon />, path: '/Dashboard' },
-        { text: 'Blog', icon: <ArticleIcon />, path: '/Dashboard/Blog' },
-        { text: 'Transactions', icon: <PaymentIcon />, path: '/Dashboard/Transactions' },
-        {text: 'Jobs', icon:<WorkIcon/>, path:'/Dashboard/Job-Applications'},
-        { text: 'Users', icon: <PeopleIcon />, path: '/Dashboard/Users' },
-        { text: 'Settings', icon: <SettingsIcon />, path: '/Dashboard/Profile' },
-        { text: 'Logout', icon: <LogoutIcon />, path: '/ELP-staff-login' }
+        { text: 'Profile', icon: <PersonIcon/>, path: '/Dashboard/Profile' },
+        { text: 'Legal Help', icon: <Diversity1Icon />, path: '/Dashboard/Blog' },
+        { text: 'Appointments', icon: <CalendarMonthIcon/>, path: '/Dashboard/Transactions' },
+        { text: 'Cases', icon: <WorkIcon />, path: '/Dashboard/Job-Applications' },
+        { text: 'Clients', icon: <PeopleIcon />, path: '/Dashboard/Users' },        
+        { text: 'Logout', icon: <LogoutIcon />, path: '/log-in' }
     ];
 
     const handleNavigation = (path) => {
@@ -35,37 +35,20 @@ const Sidebar = ({ open, toggleSidebar }) => {
         <Drawer
             variant="persistent"
             open={open}
+            className="sidebar"
             sx={{
-                width: open ? 240 : 0, // Control the width of the drawer
-                flexShrink: 0,
-                [`& .MuiDrawer-paper`]: { 
-                    width: 240, 
-                    boxSizing: 'border-box', 
-                    backgroundColor: shades.white[500], // Set background color
-                    color: shades.darkgreen, // Set text color
-                    transition: 'width 0.3s ease' // Smooth transition
-                },
+                width: open ? '240px' : 0 ,
             }}
         >
             {/* Sidebar Header */}
-            <Box
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: 2,
-                }}
-            >
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Box className="sidebar-header">
+                <Box className="logo-container">
                     <Avatar 
                         alt="Company Logo" 
                         src="/assets/ELP.png" 
-                        sx={{ width: 60, height: 60, marginBottom: 1, marginRight: 1 }}
+                        className="company-logo"
                     />
-                    <Typography variant="h6">
-                        ELP
-                    </Typography>
+                    <Typography variant="h6">Hakilink</Typography>
                 </Box>
                 
                 {/* Toggle Button */}
@@ -81,16 +64,9 @@ const Sidebar = ({ open, toggleSidebar }) => {
                         button
                         key={item.text}
                         onClick={() => handleNavigation(item.path)}
-                        sx={{
-                            backgroundColor: selectedPath === item.path ? shades.darkgreen : 'inherit', // Change background color if selected
-                            color: selectedPath === item.path ? 'white' : shades.darkgreen, // Change text color if selected
-                            '&:hover': {
-                                backgroundColor: shades.darkgreen,
-                                color: 'white'
-                            }
-                        }}
+                        className={`menu-item ${selectedPath === item.path ? 'selected' : ''}`}
                     >
-                        <ListItemIcon sx={{ color: selectedPath === item.path ? 'white' : shades.darkgreen }}>
+                        <ListItemIcon className={`menu-icon ${selectedPath === item.path ? 'selected-icon' : ''}`}>
                             {item.icon}
                         </ListItemIcon>
                         <ListItemText primary={item.text} />

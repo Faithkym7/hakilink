@@ -16,7 +16,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-console.log("Firebase app initialized:", app.name); // Should log "[DEFAULT]" if successfully initialized
+//console.log("Firebase app initialized:", app.name); // Should log "[DEFAULT]" if successfully initialized
 
 const analytics = typeof window !== "undefined" ? getAnalytics(app) : null; // Optional check for analytics in non-browser environments
 

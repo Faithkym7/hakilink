@@ -1,0 +1,54 @@
+.sidebar { // Set sidebar width
+    flex-shrink: 0;
+  
+    & .MuiDrawer-paper {
+      width: 240px;
+      box-sizing: border-box;
+      background-color: #ffffff; // Set background color
+      color: #4e3485; // Set text color
+      transition: width 0.3s ease; // Smooth transition
+    }
+  }
+  
+  .sidebar-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px; // Use a consistent padding
+  
+    .logo-container {
+      display: flex;
+      align-items: center;
+  
+      .company-logo {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 8px;
+        margin-right: 8px;
+      }
+    }
+  }
+  
+  .menu-item {    
+    &.selected {
+      background-color: #2C92A1; // Selected item background color
+      color: white; // Selected item text color
+    }
+  
+    &:hover {
+      background-color: #8851FD; // Hover effect
+      color: white; // Text color on hover
+    }
+  }
+  
+  .menu-icon {
+    color: #2C92A1;
+    &.selected-icon {
+      color: white; // Selected icon color
+    }
+    &:hover {
+        color: white;
+    }
+  }
+  

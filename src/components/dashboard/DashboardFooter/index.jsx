@@ -1,19 +1,12 @@
-import React from 'react'
-import { Box,Typography } from '@mui/material'
-import { shades } from '../../../theme';
+import React from 'react';
+import { Box,Typography } from '@mui/material';
+import './DashboardFooter.scss';
 
 const DasboardFooter = () => {
   const currentYear = new Date().getFullYear();
   return (
-    <Box
-      sx={{
-        backgroundColor: 'white',
-        color: shades.darkgreen,
-        padding: '1rem',
-        textAlign: 'center',
-      }}
-    >
-      <Typography variant="body2" sx={{ marginTop: '1rem' }}>© {currentYear} Entrepreneurial Legal Partner. All rights reserved.</Typography>
+    <Box className = 'dashboard-footer' >
+      <Typography className='footer-text' >© {currentYear} Hakilink. All rights reserved.</Typography>
     </Box>
   )
 }

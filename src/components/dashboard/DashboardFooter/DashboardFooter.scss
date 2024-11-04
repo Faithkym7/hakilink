@@ -1,0 +1,18 @@
+$primary-color: #fff; // Change to your desired primary color
+$secondary-color: #4e3485; // Change to your desired secondary color
+$font-size-large: 2rem;
+$font-size-medium: 1.5rem;
+$font-size-small: 1rem;
+
+.dashboard-footer{
+    background-color: $primary-color;
+    color: $secondary-color;
+    padding: 2rem;
+    text-align: center;
+}
+
+.footer-text {
+    font-variant: normal;
+    font-size: $font-size-small;
+    margin-top: 1rem;
+}

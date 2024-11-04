@@ -25,7 +25,7 @@ const Footer = () => {
       message: message,
     };
   
-    console.log('Sending email with params:', templateParams);
+   // console.log('Sending email with params:', templateParams);
   
     emailjs.send(
       process.env.REACT_APP_EMAILJS_SERVICE_ID,
@@ -34,7 +34,7 @@ const Footer = () => {
       process.env.REACT_APP_EMAILJS_USER_ID
     )
     .then((result) => {
-      console.log('Email successfully sent!', result.text);
+     // console.log('Email successfully sent!', result.text);
       setLoading(false);
       setIsFormSubmitted(true);
     })

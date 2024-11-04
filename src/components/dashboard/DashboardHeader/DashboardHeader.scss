@@ -1,0 +1,38 @@
+$primary-color: #fff; // Change to your desired primary color
+$secondary-color: #4e3485; // Change to your desired secondary color
+$font-size-large: 2rem;
+$font-size-medium: 1.5rem;
+
+.dashboard-header {  
+  padding: 0px;
+
+  .toolbar {
+    background-color: $primary-color;
+    color: $secondary-color;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .menu-icon {
+    margin-right: 16px;
+    font-size: $font-size-large;
+  }
+
+  .greeting {
+    font-size: $font-size-medium;
+  }
+
+  .user-section {
+    display: flex;
+    align-items: center;
+
+    .account-icon {
+      font-size: 2.5rem;
+    }
+
+    .logout-button {
+      margin-left: 16px;
+    }
+  }
+}

@@ -43,7 +43,7 @@ const Signup = () => {
     setError('');
   
     // Log the auth instance to verify it
-    console.log("Auth instance:", auth);
+    //console.log("Auth instance:", auth);
   
     if (!email || !password || !name) {
       setError("All fields are required");

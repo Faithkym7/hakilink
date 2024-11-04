@@ -42,16 +42,16 @@ const Navbar = () => {
                   </a>
                 </li>
               ))}
-              <button onClick={() => navigate('/sign-up')} className="navbar_button">SIGNUP</button>
-              <button onClick={() => navigate('/log-in')} className="navbar_button">LOGIN</button>
+              <button onClick={() => navigate('/sign-up')} className="navbar_button">Sign Up</button>
+              <button onClick={() => navigate('/log-in')} className="navbar_button">Log In</button>
             </ul>
           </motion.div>
         )}
       </div>
 
       <div className="app__navbar-button">
-        <button onClick={() => navigate('/sign-up')} className="navbar_button">SIGNUP</button>
-        <button onClick={() => navigate('/log-in')} className="navbar_button">LOGIN</button>
+        <button onClick={() => navigate('/sign-up')} className="navbar_button">Sign Up</button>
+        <button onClick={() => navigate('/log-in')} className="navbar_button">Log In</button>
       </div>
     </nav>
   );
