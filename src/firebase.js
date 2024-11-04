@@ -2,6 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
+import {getFirestore} from 'firebase/firestore';
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -16,8 +17,9 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 //console.log("Firebase app initialized:", app.name); // Should log "[DEFAULT]" if successfully initialized
 
 const analytics = typeof window !== "undefined" ? getAnalytics(app) : null; // Optional check for analytics in non-browser environments
 
-export { auth, analytics };
+export { auth, analytics , db};

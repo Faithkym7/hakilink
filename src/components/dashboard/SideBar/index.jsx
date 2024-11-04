@@ -78,3 +78,6 @@ const Sidebar = ({ open, toggleSidebar }) => {
 };
 
 export default Sidebar;
+
+
+//TODO: update sidebar according to users

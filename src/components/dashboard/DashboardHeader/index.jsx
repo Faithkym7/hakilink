@@ -3,27 +3,44 @@ import { AppBar, Toolbar, Typography, IconButton, Box, Button } from '@mui/mater
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
-import './DashboardHeader.scss'; // Import the SCSS file
-import { auth } from '../../../firebase'; // Adjust the path as necessary
-import { signOut } from 'firebase/auth'; // Import signOut function
+import './DashboardHeader.scss';
+import { auth, db } from '../../../firebase'; // Import db (Firestore instance) along with auth
+import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import { doc, getDoc } from 'firebase/firestore'; // Import Firestore functions
 
 const DashboardHeader = ({ toggleSidebar }) => {
   const [username, setUsername] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
-    const user = auth.currentUser; // Get the current user from Firebase
-    if (user) {
-      const emailParts = user.email.split('@'); // Split the email at '@'
-      setUsername(emailParts[0]); // Set the username to the part before '@'
-    }
+    const fetchUsername = async () => {
+      const user = auth.currentUser;
+      if (user) {
+        try {
+          // Reference the user's document in the Firestore 'users' collection
+          const userDocRef = doc(db, 'users', user.uid);
+          const userDoc = await getDoc(userDocRef);
+
+          if (userDoc.exists()) {
+            // Set the username from Firestore, or fallback to 'User'
+            setUsername(userDoc.data().name || 'User');
+          } else {
+            console.log('No such document!');
+          }
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      }
+    };
+
+    fetchUsername();
   }, []);
 
   const handleLogout = async () => {
     try {
       await signOut(auth); // Sign out the user
-      navigate('/#home')// Optionally, redirect to login page or show a success message
+      navigate('/#home'); // Optionally, redirect to home page or login
     } catch (error) {
       console.error('Error signing out:', error);
     }

@@ -8,9 +8,10 @@ import Select from '@mui/material/Select';
 import './SignUp.scss';
 import { images } from '../../constants';
 import { motion } from 'framer-motion';
-
+//import firestore
+import {doc,setDoc} from 'firebase/firestore';
 // Import the initialized auth instance
-import { auth } from '../../firebase.js'; // Adjust the path if needed
+import { auth, db } from '../../firebase.js'; // Adjust the path if needed
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -41,10 +42,7 @@ const Signup = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     setError('');
-  
-    // Log the auth instance to verify it
-    //console.log("Auth instance:", auth);
-  
+
     if (!email || !password || !name) {
       setError("All fields are required");
       return;
@@ -53,28 +51,42 @@ const Signup = () => {
       setError("Password must be at least 6 characters long");
       return;
     }
-  
+
     try {
-      await createUserWithEmailAndPassword(auth, email, password); // Use the imported auth here
-      setOpenSnackbar(true);
-      setName('');
-      setEmail('');
-      setPassword('');
-      setSpecialization('');
-      setTimeout(() => {
-        navigate('/log-in');
-      }, 1500);
+        // Sign up user with Firebase Auth
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        // Store additional user data in Firestore
+        await setDoc(doc(db, "users", user.uid), {
+            name: name,
+            email: email,
+            role: role,
+            specialization: role === 'lawyer' ? specialization : null,
+            createdAt: new Date() // Optional: timestamp for account creation
+        });
+
+        setOpenSnackbar(true);
+        setName('');
+        setEmail('');
+        setPassword('');
+        setSpecialization('');
+        
+        setTimeout(() => {
+          navigate('/log-in');
+        }, 1500);
+        
     } catch (err) {
-      console.error("Error during signup:", err);  // Log the full error
-      if (err.code === 'auth/email-already-in-use') {
-        setError('Email already exists. Please log in.');
-      } else if (err.message) {
-        setError(`Error: ${err.message}`);
-      } else {
-        setError('An error occurred. Please try again.');
-      }
+        console.error("Error during signup:", err);  // Log the full error
+        if (err.code === 'auth/email-already-in-use') {
+            setError('Email already exists. Please log in.');
+        } else if (err.message) {
+            setError(`Error: ${err.message}`);
+        } else {
+            setError('An error occurred. Please try again.');
+        }
     }
-  };
+};
   
   
   
