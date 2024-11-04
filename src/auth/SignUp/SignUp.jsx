@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import './SignUp.scss';
-import {images} from '../../constants'
+import { images } from '../../constants';
 import { motion } from 'framer-motion';
+
+// Import the initialized auth instance
+import { auth } from '../../firebase.js'; // Adjust the path if needed
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -38,11 +41,22 @@ const Signup = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     setError('');
-
-    const auth = getAuth();
+  
+    // Log the auth instance to verify it
+    console.log("Auth instance:", auth);
+  
+    if (!email || !password || !name) {
+      setError("All fields are required");
+      return;
+    }
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters long");
+      return;
+    }
+  
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      setOpenSnackbar(true);  // Open success snackbar
+      await createUserWithEmailAndPassword(auth, email, password); // Use the imported auth here
+      setOpenSnackbar(true);
       setName('');
       setEmail('');
       setPassword('');
@@ -51,13 +65,19 @@ const Signup = () => {
         navigate('/log-in');
       }, 1500);
     } catch (err) {
+      console.error("Error during signup:", err);  // Log the full error
       if (err.code === 'auth/email-already-in-use') {
         setError('Email already exists. Please log in.');
+      } else if (err.message) {
+        setError(`Error: ${err.message}`);
       } else {
         setError('An error occurred. Please try again.');
       }
     }
   };
+  
+  
+  
 
   const handleCloseSnackbar = (event, reason) => {
     if (reason === 'clickaway') return;
@@ -75,7 +95,7 @@ const Signup = () => {
             initial={{ x: -50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: 50, opacity: 0 }}
-            ransition={{ duration: 0.5 }}
+            transition={{ duration: 0.5 }}
           />
           <h6>We care about You</h6>
         </div>
@@ -155,6 +175,9 @@ const Signup = () => {
 
             <button type="submit" className="signup-button">Sign Up</button>
           </form>
+          <div className="signup-prompt">
+            <p>Already have an account? <span onClick={() => navigate('/log-in')}>Log-In</span></p>
+          </div>
         </div>      
 
         {/* Snackbar for Signup Success */}
@@ -173,4 +196,3 @@ const Signup = () => {
 };
 
 export default Signup;
-//TODO: complete form validation

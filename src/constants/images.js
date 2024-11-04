@@ -8,6 +8,7 @@ import mobile from '../assets/mobile.png';
 import laura from '../assets/Laura.jpeg';
 import serene from '../assets/Serene.jpeg';
 import care from '../assets/care.png';
+import error404 from '../assets/error404.png';
 
 const images =  {
     logo,
@@ -19,7 +20,8 @@ const images =  {
     mobile,
     laura, 
     serene,
-    care
+    care,
+    error404
 };
 
 export default images;

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import './Services.scss'; // Ensure the CSS file is created for styling
 import {images} from '../../constants';
 import { AppWrap } from '../../Wrapper';
+import { useNavigate } from 'react-router-dom';
 
 const services = [
     {
@@ -11,6 +12,7 @@ const services = [
         description: 'Our legal consultation service connects victims with experienced lawyers who specialize in various areas of law. Get tailored guidance and understand your rights.',
         image: images.hero, // Replace with your image path
         buttonText: 'Get Help',
+        path:'/sign-up',
     },
     {
         id: 2,
@@ -18,12 +20,14 @@ const services = [
         description: 'Access a wealth of educational resources designed to empower victims with knowledge about their rights and legal processes.',
         image: images.educational, // Replace with your image path
         buttonText: 'Learn More',
+        path:'/coming-soon'
     },
     // Add more services as needed
 ];
 
 const ServicePage = () => {
     const [currentServiceIndex, setCurrentServiceIndex] = useState(0);
+    const navigate = useNavigate();
 
     const handleNext = () => {
         setCurrentServiceIndex((prevIndex) => (prevIndex + 1) % services.length);
@@ -66,7 +70,7 @@ const ServicePage = () => {
                     >
                         <h2>{services[currentServiceIndex].title}</h2>
                         <p>{services[currentServiceIndex].description}</p>
-                        <button className="service-button">{services[currentServiceIndex].buttonText}</button>
+                        <button onClick={()=>navigate(services[currentServiceIndex].path)} className="service-button">{services[currentServiceIndex].buttonText}</button>
                     </motion.div>
                 </div>
             </motion.div>

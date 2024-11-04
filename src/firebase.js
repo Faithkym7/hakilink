@@ -11,11 +11,13 @@ const firebaseConfig = {
     messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
     appId: process.env.REACT_APP_FIREBASE_APP_ID,
     measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
-  };
+};
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const analytics = getAnalytics(app);
+console.log("Firebase app initialized:", app.name); // Should log "[DEFAULT]" if successfully initialized
+
+const analytics = typeof window !== "undefined" ? getAnalytics(app) : null; // Optional check for analytics in non-browser environments
 
 export { auth, analytics };

@@ -3,8 +3,10 @@ import './Header.scss';
 import { motion } from 'framer-motion';
 import { AppWrap } from '../../Wrapper';
 import { images } from '../../constants';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
+  const navigate = useNavigate();
   return (
     <div className="app__header app__flex">
       {/* Information Section */}
@@ -29,7 +31,7 @@ const Header = () => {
 
         <div className="get-help">
           <a href="#contact">
-            <button className="get-help-button">Get Help</button>
+            <button onClick={()=>navigate('/sign-up')} className="get-help-button">Get Help</button>
           </a>
         </div>
 
