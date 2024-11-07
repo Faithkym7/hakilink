@@ -19,10 +19,10 @@ const Sidebar = ({ open, toggleSidebar }) => {
     const menuItems = [
         { text: 'Overview', icon: <DashboardIcon />, path: '/Dashboard' },
         { text: 'Profile', icon: <PersonIcon/>, path: '/Profile' },
-        { text: 'Legal Help', icon: <Diversity1Icon />, path: '/Dashboard/Blog' },
-        { text: 'Appointments', icon: <CalendarMonthIcon/>, path: '/Dashboard/Transactions' },
-        { text: 'Cases', icon: <WorkIcon />, path: '/Dashboard/Job-Applications' },
-        { text: 'Clients', icon: <PeopleIcon />, path: '/Dashboard/Users' },        
+        { text: 'Legal Help', icon: <Diversity1Icon />, path: '/coming-soon' },
+        { text: 'Appointments', icon: <CalendarMonthIcon/>, path: '/coming-soon' },
+        { text: 'Cases', icon: <WorkIcon />, path: '/coming-soon' },
+        { text: 'Clients', icon: <PeopleIcon />, path: '/coming-soon' },        
         { text: 'Logout', icon: <LogoutIcon />, path: '/log-in' }
     ];
 
