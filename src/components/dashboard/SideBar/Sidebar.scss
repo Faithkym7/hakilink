@@ -45,10 +45,12 @@
   .menu-icon {
     color: #2C92A1;
     &.selected-icon {
+      background-color: #2C92A1; // Selected item background color
       color: white; // Selected icon color
     }
     &:hover {
-        color: white;
+      background-color: #8851FD; // Hover effect
+      color: white;
     }
   }
   

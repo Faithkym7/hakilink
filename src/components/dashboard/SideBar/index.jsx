@@ -18,7 +18,7 @@ const Sidebar = ({ open, toggleSidebar }) => {
 
     const menuItems = [
         { text: 'Overview', icon: <DashboardIcon />, path: '/Dashboard' },
-        { text: 'Profile', icon: <PersonIcon/>, path: '/Dashboard/Profile' },
+        { text: 'Profile', icon: <PersonIcon/>, path: '/Profile' },
         { text: 'Legal Help', icon: <Diversity1Icon />, path: '/Dashboard/Blog' },
         { text: 'Appointments', icon: <CalendarMonthIcon/>, path: '/Dashboard/Transactions' },
         { text: 'Cases', icon: <WorkIcon />, path: '/Dashboard/Job-Applications' },

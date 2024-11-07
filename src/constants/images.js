@@ -9,6 +9,8 @@ import laura from '../assets/Laura.jpeg';
 import serene from '../assets/Serene.jpeg';
 import care from '../assets/care.png';
 import error404 from '../assets/error404.png';
+import anne from '../assets/Anne.jpeg';
+import mary from '../assets/Mary.jpeg';
 
 const images =  {
     logo,
@@ -20,6 +22,8 @@ const images =  {
     mobile,
     laura, 
     serene,
+    anne,
+    mary,
     care,
     error404
 };

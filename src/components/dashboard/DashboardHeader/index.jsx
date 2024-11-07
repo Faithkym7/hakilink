@@ -4,29 +4,33 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
 import './DashboardHeader.scss';
-import { auth, db } from '../../../firebase'; // Import db (Firestore instance) along with auth
+import { auth, db } from '../../../firebase'; // Import Firebase auth and Firestore instance
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import { doc, getDoc } from 'firebase/firestore'; // Import Firestore functions
+import { doc, getDoc } from 'firebase/firestore'; // Firestore functions to get document data
 
 const DashboardHeader = ({ toggleSidebar }) => {
   const [username, setUsername] = useState('');
+  const [specialization, setSpecialization] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchUsername = async () => {
+    const fetchUserData = async () => {
       const user = auth.currentUser;
       if (user) {
         try {
-          // Reference the user's document in the Firestore 'users' collection
+          // Get the user's document in the Firestore 'users' collection
           const userDocRef = doc(db, 'users', user.uid);
           const userDoc = await getDoc(userDocRef);
 
           if (userDoc.exists()) {
-            // Set the username from Firestore, or fallback to 'User'
-            setUsername(userDoc.data().name || 'User');
+            const userData = userDoc.data();
+            setUsername(userData.name || 'User'); // Set username
+            if (userData.role === 'lawyer') {
+              setSpecialization(userData.specialization || ''); // Set specialization if role is 'lawyer'
+            }
           } else {
-            console.log('No such document!');
+            console.log('No such document in Firestore!');
           }
         } catch (error) {
           console.error('Error fetching user data:', error);
@@ -34,13 +38,13 @@ const DashboardHeader = ({ toggleSidebar }) => {
       }
     };
 
-    fetchUsername();
+    fetchUserData();
   }, []);
 
   const handleLogout = async () => {
     try {
-      await signOut(auth); // Sign out the user
-      navigate('/#home'); // Optionally, redirect to home page or login
+      await signOut(auth); // Log out the user
+      navigate('/#home'); // Redirect to home page after logout
     } catch (error) {
       console.error('Error signing out:', error);
     }
@@ -58,6 +62,7 @@ const DashboardHeader = ({ toggleSidebar }) => {
         {/* Greeting Section */}
         <Typography variant="h6" className="greeting">
           Hello, {username || 'User'}
+          {specialization && <span> - {specialization}</span>}
         </Typography>
 
         {/* User Icon and Logout */}

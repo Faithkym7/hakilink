@@ -1,0 +1,36 @@
+.profile-page {
+  padding: 20px;
+  background-color: #f4f6f8;
+  font-family: 'Roboto', sans-serif;
+
+  h4 {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 30px;
+  }
+
+  .profile-paper {
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+
+  .MuiAvatar-root {
+    margin-bottom: 20px;
+    border: 2px solid #3498db;
+  }
+
+  .MuiButton-root {
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  .MuiTextField-root {
+    margin-bottom: 20px;
+  }
+
+  button:disabled {
+    background-color: #ccc;
+  }
+}
