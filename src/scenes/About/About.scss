@@ -72,10 +72,11 @@
             margin-bottom: 2rem;
           }
   
-          img {
-            width: 100px; // Adjust as needed
-            height: 100px; // Adjust as needed
+          img {            
+            width: 100px;      // Allow the image to resize based on its natural dimensions
+            height: 100px;
             border-radius: 50%;
+            object-fit: cover; // Ensures the image fills the container without distortion
             margin-bottom: 0.5rem;
           }
   

@@ -1,6 +1,6 @@
 import logo from '../assets/hakilink.jpeg';
 import hero from '../assets/hero.png';
-import students from '../assets/students.jpg';
+import students from '../assets/students.jpeg';
 import member from '../assets/member.jpg';
 import educational from '../assets/educational.png';
 import email from '../assets/email.png';
