@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+//import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getFirestore, doc, getDoc } from "firebase/firestore"; 
 
 const db = getFirestore();
-const auth = getAuth();
+//const auth = getAuth();
 
 // Async thunk to fetch user data from Firestore
 export const fetchUser = createAsyncThunk("user/fetchUser", async (userId) => {
