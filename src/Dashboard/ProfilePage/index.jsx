@@ -1,45 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import { db, auth } from '../../firebase';  // Firebase setup
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import React, { useState } from 'react';
 import { TextField, Button, Box, Avatar, Grid, Paper, Typography } from '@mui/material';
 import { Edit as EditIcon } from '@mui/icons-material';
+import { db } from '../../firebase';  // Firebase Firestore setup
+import { doc, updateDoc } from 'firebase/firestore';
+import { useSelector } from 'react-redux';  // Import useSelector from Redux
 import './ProfilePage.scss';
 
 const ProfilePage = () => {
-  const [userName, setUserName] = useState('');
-  const [userEmail, setUserEmail] = useState('');
-  const [profilePic, setProfilePic] = useState('');
+  // Fetch user data from Redux store
+  const user = useSelector((state) => state.user.data);
+
+  const [userName, setUserName] = useState(user?.name || 'User');
+  const [userEmail] = useState(user?.email || 'No email');
+  const [profilePic, setProfilePic] = useState(user?.profilePic || 'https://via.placeholder.com/150');
   const [newUserName, setNewUserName] = useState('');
   const [newProfilePic, setNewProfilePic] = useState('');
   const [isEditing, setIsEditing] = useState(false);
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const user = auth.currentUser;
-      if (user) {
-        try {
-          const userDocRef = doc(db, 'users', user.uid);
-          const userDoc = await getDoc(userDocRef);
-          if (userDoc.exists()) {
-            const userData = userDoc.data();
-            setUserName(userData.name || 'User');
-            setUserEmail(userData.email || 'No email');
-            setProfilePic(userData.profilePic || 'https://via.placeholder.com/150');
-          }
-        } catch (error) {
-          console.error('Error fetching user data:', error);
-        }
-      }
-    };
-
-    fetchUserData();
-  }, []);
-
   const handleUpdateProfile = async () => {
-    const user = auth.currentUser;
     if (user && newUserName) {
       try {
-        const userDocRef = doc(db, 'users', user.uid);
+        const userDocRef = doc(db, 'users', user.uid);  // Access user ID from Redux state
         await updateDoc(userDocRef, {
           name: newUserName || userName,
           profilePic: newProfilePic || profilePic,

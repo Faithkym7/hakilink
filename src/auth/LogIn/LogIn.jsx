@@ -1,11 +1,12 @@
-// Login.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import { useDispatch } from 'react-redux';
+import { fetchUser, clearUser } from '../../store/userSlice';
 import './LogIn.scss';
-import {images} from '../../constants';
+import { images } from '../../constants';
 import { motion } from 'framer-motion';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
@@ -19,21 +20,20 @@ const Login = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
+  // Login handler
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
-
     const auth = getAuth();
+
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      setOpenSnackbar(true);  // Open the snackbar on successful login
+      setOpenSnackbar(true);  // Open snackbar on success
       setEmail('');
       setPassword('');
-      // Redirect to the dashboard or home page after login
-      setTimeout(() => {
-        navigate('/Dashboard');
-      }, 1500);  // Optional delay for snackbar display
+      setTimeout(() => navigate('/Dashboard'), 1500);  // Redirect to dashboard
     } catch (err) {
       setError('Invalid email or password.');
     }
@@ -44,20 +44,34 @@ const Login = () => {
     setOpenSnackbar(false);
   };
 
+  // onAuthStateChanged - runs on mount
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        dispatch(fetchUser(user.uid));
+      } else {
+        dispatch(clearUser());
+      }
+    });
+
+    return () => unsubscribe();
+  }, [dispatch]);
+
   return (
     <div className='login'>
       <div className="login-container">
         <div className='login-container-media'>
           <motion.img
-                src={images.care}
-                alt='care'
-                className='signup-container-image'
-                initial={{ x: -50, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                exit={{ x: 50, opacity: 0 }}
-                ransition={{ duration: 0.5 }}
-              />
-            <h6>We care about you</h6>
+            src={images.care}
+            alt='care'
+            className='signup-container-image'
+            initial={{ x: -50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: 50, opacity: 0 }}
+            transition={{ duration: 0.5 }}
+          />
+          <h6>We care about you</h6>
         </div>
         <div className='login-container-section'>
           <h1>Welcome Back</h1>
@@ -111,4 +125,3 @@ const Login = () => {
 };
 
 export default Login;
-//TODO:complete UI and form validation

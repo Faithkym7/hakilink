@@ -11,6 +11,8 @@ import care from '../assets/care.png';
 import error404 from '../assets/error404.png';
 import anne from '../assets/Anne.jpeg';
 import mary from '../assets/Mary.jpeg';
+import maina from '../assets/Maina.jpeg';
+import bridget from '../assets/Bridget.jpeg';
 
 const images =  {
     logo,
@@ -24,6 +26,8 @@ const images =  {
     serene,
     anne,
     mary,
+    maina,
+    bridget,
     care,
     error404
 };

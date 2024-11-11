@@ -1,45 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { AppBar, Toolbar, Typography, IconButton, Box, Button } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
 import './DashboardHeader.scss';
-import { auth, db } from '../../../firebase'; // Import Firebase auth and Firestore instance
+import { auth } from '../../../firebase'; // Import Firebase auth for sign-out functionality
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import { doc, getDoc } from 'firebase/firestore'; // Firestore functions to get document data
+import { useSelector } from 'react-redux';
 
 const DashboardHeader = ({ toggleSidebar }) => {
-  const [username, setUsername] = useState('');
-  const [specialization, setSpecialization] = useState('');
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const user = auth.currentUser;
-      if (user) {
-        try {
-          // Get the user's document in the Firestore 'users' collection
-          const userDocRef = doc(db, 'users', user.uid);
-          const userDoc = await getDoc(userDocRef);
+  // Use the useSelector hook to get user data from the Redux store
+  const user = useSelector((state) => state.user.data);
 
-          if (userDoc.exists()) {
-            const userData = userDoc.data();
-            setUsername(userData.name || 'User'); // Set username
-            if (userData.role === 'lawyer') {
-              setSpecialization(userData.specialization || ''); // Set specialization if role is 'lawyer'
-            }
-          } else {
-            console.log('No such document in Firestore!');
-          }
-        } catch (error) {
-          console.error('Error fetching user data:', error);
-        }
-      }
-    };
-
-    fetchUserData();
-  }, []);
+  // Set up username and specialization state based on user data from Redux
+  const username = user?.name || 'User';
+  const specialization = user?.role === 'lawyer' ? user.specialization || '' : '';
 
   const handleLogout = async () => {
     try {
@@ -61,7 +39,7 @@ const DashboardHeader = ({ toggleSidebar }) => {
 
         {/* Greeting Section */}
         <Typography variant="h6" className="greeting">
-          Hello, {username || 'User'}
+          Hello, {username}
           {specialization && <span> - {specialization}</span>}
         </Typography>
 

@@ -1,32 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { db, auth } from '../../firebase'; // Assuming Firebase setup
-import { doc, getDoc } from 'firebase/firestore';
+import React from 'react';
+import { useSelector } from 'react-redux';  // Import useSelector from Redux
 import './DashboardOverview.scss';
 
 const DashboardOverview = () => {
-  const [userRole, setUserRole] = useState(null);
-  const [userName, setUserName] = useState('');
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const user = auth.currentUser;
-      if (user) {
-        try {
-          const userDoc = await getDoc(doc(db, 'users', user.uid));
-          if (userDoc.exists()) {
-            setUserName(userDoc.data().name);
-            setUserRole(userDoc.data().role);
-          } else {
-            console.log('No such document!');
-          }
-        } catch (error) {
-          console.error('Error fetching user data:', error);
-        }
-      }
-    };
-
-    fetchUserData();
-  }, []);
+  // Get user data and role from Redux store
+  const userName = useSelector((state) => state.user.data.name);
+  const userRole = useSelector((state) => state.user.data.role);
 
   return (
     <div className="dashboard-overview">
