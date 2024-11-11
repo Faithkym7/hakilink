@@ -4,8 +4,7 @@ import { Header, About, Services, Footer } from './scenes';
 import { DashboardLayout, Error404, Navbar } from './components';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Login, Signup } from './auth';
-import DashboardOverview from './Dashboard/DashboardOverview';
-import ProfilePage from './Dashboard/ProfilePage';
+import { DashboardOverview, LegalHelp, ProfilePage } from './Dashboard';
 
 function App() {
   return (
@@ -33,6 +32,7 @@ function App() {
           <Route element={<DashboardLayout/>}>
             <Route path='/Dashboard' element={<DashboardOverview/>}/>
             <Route path='/Profile' element={<ProfilePage/>}/>
+            <Route path='/Legal-help' element={<LegalHelp/>}/>
           </Route>
         </Routes>
       </div>

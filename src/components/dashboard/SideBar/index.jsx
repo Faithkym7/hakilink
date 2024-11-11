@@ -9,6 +9,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import WorkIcon from '@mui/icons-material/Work';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { useNavigate, useLocation } from 'react-router-dom'; // Import useNavigate and useLocation
+import { useSelector } from 'react-redux';  // Import useSelector to access the user's role from Redux
 import './Sidebar.scss'; // Import the SCSS file
 
 const Sidebar = ({ open, toggleSidebar }) => {
@@ -16,15 +17,30 @@ const Sidebar = ({ open, toggleSidebar }) => {
     const location = useLocation(); // Initialize location
     const [selectedPath, setSelectedPath] = useState(location.pathname); // State to track selected path
 
+    // Get the user's role from Redux
+    const userRole = useSelector((state) => state.user.data.role); // Assuming the role is stored in the Redux store
+
+    // Define the menu items with paths and icons
     const menuItems = [
         { text: 'Overview', icon: <DashboardIcon />, path: '/Dashboard' },
         { text: 'Profile', icon: <PersonIcon/>, path: '/Profile' },
-        { text: 'Legal Help', icon: <Diversity1Icon />, path: '/coming-soon' },
+        { text: 'Legal Help', icon: <Diversity1Icon />, path: '/Legal-help' },
         { text: 'Appointments', icon: <CalendarMonthIcon/>, path: '/coming-soon' },
         { text: 'Cases', icon: <WorkIcon />, path: '/coming-soon' },
         { text: 'Clients', icon: <PeopleIcon />, path: '/coming-soon' },        
         { text: 'Logout', icon: <LogoutIcon />, path: '/log-in' }
     ];
+
+    // Filter menu items based on the user's role
+    const filteredMenuItems = menuItems.filter(item => {
+        if (userRole === 'user') {
+            return item.text !== 'Cases' && item.text !== 'Clients'; // 'user' cannot see Cases or Clients
+        }
+        if (userRole === 'lawyer') {
+            return item.text !== 'Legal Help'; // 'lawyer' cannot see Legal Help
+        }
+        return true; // If there's no role or another role, show all items
+    });
 
     const handleNavigation = (path) => {
         navigate(path);
@@ -59,7 +75,7 @@ const Sidebar = ({ open, toggleSidebar }) => {
 
             {/* Menu List */}
             <List>
-                {menuItems.map((item) => (
+                {filteredMenuItems.map((item) => (
                     <ListItem
                         button
                         key={item.text}
@@ -78,6 +94,3 @@ const Sidebar = ({ open, toggleSidebar }) => {
 };
 
 export default Sidebar;
-
-
-//TODO: update sidebar according to users

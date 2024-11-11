@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box, Typography, Paper } from '@mui/material';
-import { db } from '../../../firebase'; // Import your Firebase instance
-import { collection, addDoc } from 'firebase/firestore'; // Firestore functions
-import './VictimSituationForm.scss';
+import { db } from '../../../../firebase';
+import { collection, addDoc } from 'firebase/firestore';
+import LawyerMatchingComponent from '../LawyerMatchingComponent'; // Import the matching component
+import './VictimSituationForm.scss'
 
 const VictimSituationForm = () => {
   const [name, setName] = useState('');
@@ -10,6 +11,7 @@ const VictimSituationForm = () => {
   const [situation, setSituation] = useState('');
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState('');
+  const [showMatchingComponent, setShowMatchingComponent] = useState(false);
 
   const validateForm = () => {
     const newErrors = {};
@@ -24,7 +26,6 @@ const VictimSituationForm = () => {
     e.preventDefault();
     if (validateForm()) {
       try {
-        // Add document to Firestore collection 'victim_reports'
         await addDoc(collection(db, 'victim_reports'), {
           name,
           contact,
@@ -32,8 +33,8 @@ const VictimSituationForm = () => {
           timestamp: new Date(),
         });
 
-        // Show a success message and clear the form
         setSuccessMessage('Your report has been successfully submitted.');
+        setShowMatchingComponent(true); // Show matching component on success
         setName('');
         setContact('');
         setSituation('');
@@ -45,7 +46,7 @@ const VictimSituationForm = () => {
   };
 
   return (
-    <Box className="victim-situation-form" display="flex" justifyContent="center">
+    <Box display="flex" justifyContent="center">
       <Paper elevation={3} className="form-container">
         <Typography variant="h5" align="center" gutterBottom>
           Describe Your Situation
@@ -94,15 +95,20 @@ const VictimSituationForm = () => {
             Submit
           </Button>
         </form>
-        
+
         {successMessage && (
           <Typography variant="body1" color="success" align="center" marginTop={2}>
             {successMessage}
           </Typography>
         )}
+
+        {/* Display the LawyerMatchingComponent only if form is successfully submitted */}
+        {showMatchingComponent && <LawyerMatchingComponent situation={situation} />}
       </Paper>
     </Box>
   );
 };
 
 export default VictimSituationForm;
+//TODO: error handle form submission
+//TODO: Create a better UI
