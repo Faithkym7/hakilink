@@ -1,3 +1,6 @@
 [build]
   command = "npm run build"
-  publish = "build" # Make sure this matches your actual output directory
+  publish = "build"
+
+[build.environment]
+  NODE_VERSION = "18.0"
