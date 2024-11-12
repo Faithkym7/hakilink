@@ -15,6 +15,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 const Login = () => {
   const [email, setEmail] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -92,13 +93,30 @@ const Login = () => {
 
             <div className="form-group">
               <label htmlFor="password">Password</label>
+              <div style={{display:'flex', alignItems:'center'}}>
               <input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                style={{ flex: 1 }}
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                style={{
+                  marginLeft: '0.5rem',
+                  cursor: 'pointer',
+                  background: 'none',
+                  border: 'none',
+                  fontSize: '1rem',
+                }}
+                aria-label="Toggle password visibility"
+              >
+                {showPassword ? 'Hide' : 'Show'}
+              </button>
+              </div>
             </div>
 
             <button type="submit" className="login-button">Log In</button>
