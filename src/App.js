@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.scss';
-import { Header, About, Services, Footer } from './scenes';
+import { Header, About, Services, Footer, HowItWorks } from './scenes';
 import { DashboardLayout, Error404, Navbar } from './components';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Login, Signup } from './auth';
@@ -23,6 +23,7 @@ function App() {
                 <Navbar />
                 <Header />
                 <About />
+                <HowItWorks/>
                 <Services />
                 <Footer />
               </>

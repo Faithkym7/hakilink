@@ -53,7 +53,7 @@ const About = () => {
             <p className="member-role">Co-Founder </p>
           </div>
           <div className="team-member">
-            <img src={images.member} alt="Team Member 3" />
+            <img src={images.grace} alt="Team Member 3" />
             <h3 className="member-name">Grace Mutheu</h3>
             <p className="member-role">Co-Founder </p>
           </div>

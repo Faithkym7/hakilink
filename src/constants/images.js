@@ -13,6 +13,8 @@ import anne from '../assets/Anne.jpeg';
 import mary from '../assets/Mary.jpeg';
 import maina from '../assets/Maina.jpeg';
 import bridget from '../assets/Bridget.jpeg';
+import grace from '../assets/Grace.jpeg';
+import how from '../assets/How.png';
 
 const images =  {
     logo,
@@ -28,8 +30,10 @@ const images =  {
     mary,
     maina,
     bridget,
+    grace,
     care,
-    error404
+    error404,
+    how
 };
 
 export default images;
