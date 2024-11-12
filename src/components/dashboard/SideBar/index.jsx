@@ -11,6 +11,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { useNavigate, useLocation } from 'react-router-dom'; // Import useNavigate and useLocation
 import { useSelector } from 'react-redux';  // Import useSelector to access the user's role from Redux
 import './Sidebar.scss'; // Import the SCSS file
+import {images} from '../../../constants'
 
 const Sidebar = ({ open, toggleSidebar }) => {
     const navigate = useNavigate(); // Initialize navigate
@@ -61,7 +62,7 @@ const Sidebar = ({ open, toggleSidebar }) => {
                 <Box className="logo-container">
                     <Avatar 
                         alt="Company Logo" 
-                        src="/assets/ELP.png" 
+                        src={images.logo}
                         className="company-logo"
                     />
                     <Typography variant="h6">Hakilink</Typography>
