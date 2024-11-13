@@ -9,7 +9,7 @@ import './SignUp.scss';
 import { images } from '../../constants';
 import { motion } from 'framer-motion';
 //import firestore
-import {doc,setDoc} from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 // Import the initialized auth instance
 import { auth, db } from '../../firebase.js'; // Adjust the path if needed
 
@@ -18,14 +18,13 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 const socialJusticeSpecializations = [
-  'Human Rights Law',
-  'Environmental Law',
-  'Labor Law',
-  'Immigration Law',
-  'Public Interest Law',
-  'Civil Rights Law',
-  'Disability Rights Law',
-  'LGBTQ+ Rights Law'
+  'Criminal Law',
+  'Civil Law',
+  'Employment Law',
+  'Family Law',
+  'Property Law',
+  'Intellectual Property Law',
+  'Business Law'
 ];
 
 const Signup = () => {
@@ -35,6 +34,7 @@ const Signup = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [specialization, setSpecialization] = useState('');
+  const [phone, setPhone] = useState('');
   const [error, setError] = useState('');
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
@@ -44,12 +44,17 @@ const Signup = () => {
     e.preventDefault();
     setError('');
 
-    if (!email || !password || !name) {
+    // Basic validation
+    if (!email || !password || !name || !phone) {
       setError("All fields are required");
       return;
     }
     if (password.length < 6) {
       setError("Password must be at least 6 characters long");
+      return;
+    }
+    if (!phone.startsWith('254-') || phone.length < 12) {
+      setError("Phone number must start with 254- and be at least 12 digits long");
       return;
     }
 
@@ -63,6 +68,7 @@ const Signup = () => {
             name: name,
             email: email,
             role: role,
+            phone: phone,  // Store phone number
             specialization: role === 'lawyer' ? specialization : null,
             createdAt: new Date() // Optional: timestamp for account creation
         });
@@ -71,6 +77,7 @@ const Signup = () => {
         setName('');
         setEmail('');
         setPassword('');
+        setPhone('');
         setSpecialization('');
         
         setTimeout(() => {
@@ -88,9 +95,6 @@ const Signup = () => {
         }
     }
 };
-  
-  
-  
 
   const handleCloseSnackbar = (event, reason) => {
     if (reason === 'clickaway') return;
@@ -141,6 +145,19 @@ const Signup = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="phone">Phone Number</label>
+              <input
+                type="tel"
+                id="phone"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="254-..."
+                required
+                pattern="254-[0-9]{9}"  // Ensures phone number starts with '254-' and has 9 digits
               />
             </div>
 

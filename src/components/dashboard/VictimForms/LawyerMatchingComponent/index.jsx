@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { Button, Typography, Box, CircularProgress } from '@mui/material';
-import axios from 'axios';
 import './LawyerMatchingComponent.scss';
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
+// Ensure that you have your API key set up securely in .env file
+const apiKey = process.env.REACT_APP_GEMINI_API_KEY;
+const genAI = new GoogleGenerativeAI(apiKey);
 
 const LawyerMatchingComponent = ({ situation }) => {
   const [matchedSpecialization, setMatchedSpecialization] = useState('');
@@ -12,48 +15,75 @@ const LawyerMatchingComponent = ({ situation }) => {
   const handleMatch = async () => {
     setLoading(true);
     setError('');
+
     try {
-      // Send user input (situation) to Gemini API
-      const response = await axios.post('https://api.google.com/generative-ai', {
-        model: 'gemini-1.5-flash',
-        apiKey: process.env.REACT_APP_GEMINI_API_KEY, // Make sure to keep your key secure
-        prompt: situation,
-      });
+      // Get the model instance
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-      const geminiResponse = response.data.text; // Extract response text
+      const prompt = `
+        Analyze the following legal situation and recommend the most suitable legal specialization.
 
-      // Define specialization keywords for matching
-      const specializationKeywords = {
-        'Human Rights Law': ['discrimination', 'rights', 'freedom', 'justice', 'abuse'],
-        'Environmental Law': ['environment', 'pollution', 'waste', 'wildlife', 'conservation'],
-        'Labor Law': ['employment', 'workplace', 'wages', 'unions', 'labor'],
-        'Immigration Law': ['visa', 'immigration', 'deportation', 'citizenship', 'asylum'],
-        'Public Interest Law': ['public interest', 'community', 'nonprofit', 'social justice'],
-        'Civil Rights Law': ['civil rights', 'discrimination', 'equality', 'freedom', 'justice'],
-        'Disability Rights Law': ['disability', 'accessibility', 'rights', 'accommodation'],
-        'LGBTQ+ Rights Law': ['lgbtq+', 'gay', 'transgender', 'queer', 'rights'],
-      };
+        Situation: "${situation}"
 
-      // Initialize scores for each specialization
-      const scores = {};
+        Available Specializations:
+        1. Criminal Law (Examples: Theft, Assault, Homicide)
+        2. Civil Law (Examples: Personal Injury, Torts, Contract Disputes)
+        3. Employment Law (Examples: Workplace Discrimination, Wage Disputes)
+        4. Family Law (Examples: Divorce, Child Custody, Domestic Abuse)
+        5. Property Law (Examples: Real Estate, Landlord-Tenant Disputes)
+        6. Intellectual Property Law (Examples: Copyright, Patents, Trademarks)
+        7. Business Law (Examples: Contracts, Mergers, Employment Agreements)
 
-      // Match keywords with Gemini response
-      Object.entries(specializationKeywords).forEach(([specialization, keywords]) => {
-        scores[specialization] = 0;
-        keywords.forEach((keyword) => {
-          if (geminiResponse.toLowerCase().includes(keyword.toLowerCase())) {
-            scores[specialization] += 1;
-          }
-        });
-      });
+        Please respond with the most appropriate legal specialization based on the situation. Avoid lengthy explanations, just give the specialization i.e if its Civil Law, just output Civil Law
+      `;
 
-      // Find the specialization with the highest score
-      const bestMatch = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
-      setMatchedSpecialization(bestMatch);
+      // Generate response from the model
+      const result = await model.generateContent(prompt);
+
+      // Log the entire response to inspect its structure
+      console.log('Full Gemini API response:', result);
+
+      if (result && result.response && result.response.candidates && result.response.candidates.length > 0) {
+        // Find the best candidate based on confidence score
+        const bestCandidate = result.response.candidates.reduce((best, current) =>
+          (current.confidence > best.confidence) ? current : best,
+          result.response.candidates[0]
+        );
+
+        // Log the best candidate for inspection
+        console.log('Best Candidate:', bestCandidate);
+
+        if (!bestCandidate) {
+          setError('No valid candidates found.');
+          return;
+        }
+
+        // Use best candidate's response for further processing
+        const geminiResponse = bestCandidate.content.parts[0].text;
+        console.log('Gemini API response text:', geminiResponse);
+
+        // Match the response to the best legal specialization
+        const matched = geminiResponse.toLowerCase().includes('human rights law') ? 'Human Rights Law' :
+          geminiResponse.toLowerCase().includes('environmental law') ? 'Environmental Law' :
+          geminiResponse.toLowerCase().includes('labor law') ? 'Labor Law' :
+          geminiResponse.toLowerCase().includes('immigration law') ? 'Immigration Law' :
+          geminiResponse.toLowerCase().includes('public interest law') ? 'Public Interest Law' :
+          geminiResponse.toLowerCase().includes('civil rights law') ? 'Civil Rights Law' :
+          geminiResponse.toLowerCase().includes('disability rights law') ? 'Disability Rights Law' :
+          geminiResponse.toLowerCase().includes('lgbtq+ rights law') ? 'LGBTQ+ Rights Law' :
+          'No suitable specialization found.';
+
+        setMatchedSpecialization(matched);
+
+      } else {
+        // Handle cases where no candidates are found or other structure issues
+        setError('No valid candidates found in the response.');
+        console.error('API response candidates issue:', result);
+      }
 
     } catch (err) {
       setError('Error occurred while matching specialization.');
-      console.error(err);
+      console.error('Error during API call:', err);
     } finally {
       setLoading(false);
     }
