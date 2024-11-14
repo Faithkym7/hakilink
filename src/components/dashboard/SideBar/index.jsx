@@ -27,7 +27,7 @@ const Sidebar = ({ open, toggleSidebar }) => {
         { text: 'Profile', icon: <PersonIcon/>, path: '/Profile' },
         { text: 'Legal Help', icon: <Diversity1Icon />, path: '/Legal-help' },
         { text: 'Appointments', icon: <CalendarMonthIcon/>, path: '/coming-soon' },
-        { text: 'Cases', icon: <WorkIcon />, path: '/coming-soon' },
+        { text: 'Cases', icon: <WorkIcon />, path: '/Client-cases' },
         { text: 'Clients', icon: <PeopleIcon />, path: '/coming-soon' },        
         { text: 'Logout', icon: <LogoutIcon />, path: '/log-in' }
     ];

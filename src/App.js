@@ -4,7 +4,7 @@ import { Header, About, Services, Footer, HowItWorks } from './scenes';
 import { DashboardLayout, Error404, Navbar } from './components';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Login, Signup } from './auth';
-import { DashboardOverview, LegalHelp, ProfilePage } from './Dashboard';
+import { DashboardOverview, LawyerCasesPage, LegalHelp, ProfilePage } from './Dashboard';
 
 function App() {
   return (
@@ -34,6 +34,7 @@ function App() {
             <Route path='/Dashboard' element={<DashboardOverview/>}/>
             <Route path='/Profile' element={<ProfilePage/>}/>
             <Route path='/Legal-help' element={<LegalHelp/>}/>
+            <Route path = '/Client-cases' element={<LawyerCasesPage/>}/>
           </Route>
         </Routes>
       </div>

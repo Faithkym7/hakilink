@@ -1,0 +1,12 @@
+.cases-page {
+  padding: 20px;
+  .MuiDataGrid-root {
+    border: none;
+    .MuiDataGrid-cell {
+      font-size: 14px;
+    }
+  }
+  .MuiButton-containedPrimary {
+    margin-top: 10px;
+  }
+}

@@ -21,4 +21,3 @@ const LegalHelp = () => {
 };
 
 export default LegalHelp;
-//TODO: create a better UI
