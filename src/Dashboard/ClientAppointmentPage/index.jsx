@@ -54,7 +54,9 @@ const ClientAppointmentPage = () => {
 
   useEffect(() => {
     fetchCases();
-  }, [lawyerEmail]); // Re-fetch when user email changes
+  },
+  // eslint-disable-next-line
+   [lawyerEmail]); // Re-fetch when user email changes
 
   // Define columns for the DataGrid
   const columns = [

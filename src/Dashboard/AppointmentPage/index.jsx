@@ -66,7 +66,9 @@ const AppointmentPage = () => {
 
   useEffect(() => {
     fetchCases();
-  }, [userEmail, userRole]); // Re-fetch when user email or role changes
+  }, 
+  // eslint-disable-next-line
+  [userEmail, userRole]); // Re-fetch when user email or role changes
 
   return (
     <Box className="appointment-page">

@@ -57,7 +57,9 @@ const LawyerCasesPage = () => {
   // Fetch cases when the lawyerEmail changes
   useEffect(() => {
     fetchCases();
-  }, [lawyerEmail]); // Dependency array includes lawyerEmail to trigger fetch when it changes
+  }, 
+  // eslint-disable-next-line
+  [lawyerEmail]); // Dependency array includes lawyerEmail to trigger fetch when it changes
 
   // DataGrid columns setup
   const columns = [
