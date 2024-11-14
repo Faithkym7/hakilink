@@ -5,6 +5,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { db } from '../../../../firebase';
 import { collection, query, where, getDocs, addDoc } from 'firebase/firestore';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 // Ensure that you have your API key set up securely in .env file
 const apiKey = process.env.REACT_APP_GEMINI_API_KEY;
@@ -15,6 +16,7 @@ const LawyerMatchingComponent = ({ situation }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [lawyers, setLawyers] = useState([]);
+  const navigate = useNavigate();
 
   const user = useSelector((state) => state.user.data);
 
@@ -111,6 +113,7 @@ const LawyerMatchingComponent = ({ situation }) => {
         lawyerEmail: lawyer.email,
       });
       alert("Booking successful!");
+      navigate('/Appointment-page')
     } catch (err) {
       setError("Error occurred while booking the lawyer.");
       console.error("Booking error:", err);
