@@ -1,31 +1,65 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Button, Box, Typography } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
-import { db } from '../../firebase';  // Assuming firebase is initialized in a separate file
+import { db, collection, getDocs, query, where } from '../../firebase'; // Adjust imports based on firebase config
+import { getAuth } from 'firebase/auth'; // Import required auth functions
 import './LawyerCasesPage.scss';
 
 const LawyerCasesPage = () => {
   const [cases, setCases] = useState([]);
+  const [error, setError] = useState(null);
 
+  // Use Redux to get user data (assuming the user data contains email)
+  const user = useSelector((state) => state.user.data);
+  const lawyerEmail = user?.email || ''; // Use empty string as fallback to avoid 'undefined' string
+
+  // Function to fetch cases from Firestore
+  const fetchCases = async () => {
+    if (!lawyerEmail) {
+      console.error('Lawyer email is undefined');
+      setError('Lawyer email is undefined');
+      return;
+    }
+
+    const auth = getAuth(); // Initialize Firebase Auth
+    const currentUser = auth.currentUser; // Get the current user from Firebase Auth
+    if (!currentUser) {
+      console.error('User is not authenticated');
+      setError('User is not authenticated');
+      return;
+    }
+
+    try {
+      // Fetch ID token only if the user is authenticated
+      const token = await currentUser.getIdToken(true); // Force token refresh
+      console.log('Auth Token:', token);
+
+      // Query Firestore for cases where lawyerEmail matches
+      const q = query(collection(db, 'cases'), where('lawyerEmail', '==', lawyerEmail));
+      const casesSnapshot = await getDocs(q);
+
+      // Map the Firestore data to your cases list
+      const casesList = casesSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      // Update state with fetched cases
+      setCases(casesList);
+      setError(null); // Reset error if data is fetched successfully
+    } catch (error) {
+      console.error('Error fetching cases:', error);
+      setError(error.message); // Display the error message to the user
+    }
+  };
+
+  // Fetch cases when the lawyerEmail changes
   useEffect(() => {
-    // Fetch cases from Firestore (assuming your Firestore structure stores them in 'cases' collection)
-    const fetchCases = async () => {
-      try {
-        const casesSnapshot = await db.collection('cases').get();
-        const casesList = casesSnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setCases(casesList);
-      } catch (error) {
-        console.error('Error fetching cases:', error);
-      }
-    };
-
     fetchCases();
-  }, []);
+  }, [lawyerEmail]); // Dependency array includes lawyerEmail to trigger fetch when it changes
 
-  // Columns for the DataGrid
+  // DataGrid columns setup
   const columns = [
     { field: 'userName', headerName: 'Client Name', width: 200 },
     { field: 'userEmail', headerName: 'Client Contact', width: 200 },
@@ -35,21 +69,17 @@ const LawyerCasesPage = () => {
       headerName: 'Reach Out',
       width: 150,
       renderCell: (params) => (
-        <Button 
-          variant="contained" 
-          color="primary" 
-          onClick={() => handleReachOut(params.row)}
-        >
+        <Button variant="contained" color="primary" onClick={() => handleReachOut(params.row)}>
           Contact
         </Button>
       ),
     },
   ];
 
+  // Handle the 'reach out' button click
   const handleReachOut = (caseData) => {
-    // Handle the 'reach out' functionality (e.g., open email client, etc.)
     console.log('Reach out to', caseData.userEmail);
-    // Implement any necessary action, e.g., open email client
+    // Implement further reach-out functionality (e.g., sending an email or message)
   };
 
   return (
@@ -57,6 +87,11 @@ const LawyerCasesPage = () => {
       <Typography variant="h4" gutterBottom>
         Lawyer's Case List
       </Typography>
+
+      {/* Display any error messages */}
+      {error && <Typography color="error">{error}</Typography>}
+
+      {/* DataGrid to display the cases */}
       <div style={{ height: 600, width: '100%' }}>
         <DataGrid
           rows={cases}
@@ -70,4 +105,3 @@ const LawyerCasesPage = () => {
 };
 
 export default LawyerCasesPage;
-//TODO: fetch cases according to the lawyer

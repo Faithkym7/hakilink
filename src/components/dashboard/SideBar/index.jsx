@@ -26,9 +26,9 @@ const Sidebar = ({ open, toggleSidebar }) => {
         { text: 'Overview', icon: <DashboardIcon />, path: '/Dashboard' },
         { text: 'Profile', icon: <PersonIcon/>, path: '/Profile' },
         { text: 'Legal Help', icon: <Diversity1Icon />, path: '/Legal-help' },
-        { text: 'Appointments', icon: <CalendarMonthIcon/>, path: '/coming-soon' },
+        { text: 'Appointments', icon: <CalendarMonthIcon/>, path: '/Appointment-page' },
         { text: 'Cases', icon: <WorkIcon />, path: '/Client-cases' },
-        { text: 'Clients', icon: <PeopleIcon />, path: '/coming-soon' },        
+        { text: 'Clients', icon: <PeopleIcon />, path: '/Clients' },        
         { text: 'Logout', icon: <LogoutIcon />, path: '/log-in' }
     ];
 

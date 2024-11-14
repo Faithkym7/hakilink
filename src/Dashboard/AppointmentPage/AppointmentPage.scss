@@ -1,0 +1,38 @@
+.appointment-page {
+    padding: 20px;
+    
+    .MuiTypography-h4 {
+      margin-bottom: 20px;
+    }
+  
+    .case-card {
+      padding: 15px;
+      background-color: #f9f9f9;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+  
+      h6 {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+  
+      .MuiTypography-body2 {
+        font-size: 0.9rem;
+        color: #555;
+        margin-bottom: 15px;
+      }
+  
+      .MuiButton-containedPrimary {
+        background-color: #3f51b5; // Material-UI primary color
+        &:hover {
+          background-color: #303f9f; // Darken on hover
+        }
+      }
+    }
+  }
+  
