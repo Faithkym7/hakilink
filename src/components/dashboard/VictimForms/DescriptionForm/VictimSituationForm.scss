@@ -25,10 +25,12 @@
 
       .MuiButton-root {
         margin-top: 10px;
-        background-color: #007bff;
+        background-color: var(--tertiary-color);
         color: #ffffff;
+        width: 8rem;
+        border-radius: 25px;
         &:hover {
-          background-color: #0056b3;
+          background-color: var(--secondary-color);
         }
       }
     }

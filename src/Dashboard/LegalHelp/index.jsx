@@ -5,9 +5,9 @@ import './LegalHelp.scss'; // Importing the SCSS file for LegalHelp component
 
 const LegalHelp = () => {
   return (
-    <Container className="legal-help-container" maxWidth="md">
+    <Container className="legal-help-container" maxWidth="lg">
       <Box className="content-box" display="flex" flexDirection="column" alignItems="center">
-        <Typography variant="h4" className="page-title">
+        <Typography variant="h4" className="page-title" sx={{marginBottom:'1.5rem'}}>
           Legal Assistance for Victims
         </Typography>
         <Typography variant="body1" className="page-description">

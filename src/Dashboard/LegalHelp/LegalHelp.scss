@@ -1,0 +1,91 @@
+// LegalHelp.scss
+
+// Variables for colors and spacing
+$primary-color: #2c3e50;
+$secondary-color: #2980b9;
+$background-color: #ecf0f1;
+$text-color: #34495e;
+$spacing-unit: 16px;
+
+// Container styling
+.legal-help-container {  
+  padding: $spacing-unit * 2;
+  border-radius: 8px;
+  
+
+  @media (max-width: 768px) {
+    padding: $spacing-unit;
+  }
+}
+
+// Content box styling
+.content-box {
+  max-width: 1200px;
+  width: 100%;
+  text-align: flex-start;
+  padding: $spacing-unit * 2;
+  background-color: white;
+  border-radius: 8px;
+
+  @media (max-width: 768px) {
+    padding: $spacing-unit;
+  }
+}
+
+// Page title styling
+.page-title {
+  color: var(--secondary-color);
+  font-weight: bold;
+  
+}
+
+// Page description styling
+.page-description {
+  color: $text-color;
+  font-size: 1rem;
+  margin-bottom: $spacing-unit * 2;
+}
+
+// Form container styling (if you want to further style VictimSituationForm)
+.form-container {
+  background-color: white;
+  padding: $spacing-unit * 2;
+  border: 1px solid var(--secondary-color);
+  border-radius: 8px;
+  margin-top: $spacing-unit * 2;
+
+  // Adjust margins for smaller screens
+  @media (max-width: 768px) {
+    padding: $spacing-unit;
+  }
+}
+
+// Typography styling within form
+.form-container .MuiTypography-root {
+  color: $primary-color;
+}
+
+// Button styling
+.MuiButton-root {
+  background-color: $secondary-color;
+  color: white;
+  font-weight: bold;
+  padding: $spacing-unit;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: darken($secondary-color, 10%);
+  }
+}
+
+// TextField styling
+.MuiTextField-root {
+  margin-bottom: $spacing-unit;
+}
+
+// Success message styling
+.MuiTypography-body1.success-message {
+  color: $secondary-color;
+  font-weight: bold;
+  margin-top: $spacing-unit;
+}

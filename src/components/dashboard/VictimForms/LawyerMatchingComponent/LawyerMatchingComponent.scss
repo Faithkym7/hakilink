@@ -1,30 +1,85 @@
 .lawyer-matching {
-    margin-top: 20px;
-    text-align: center;
-  
-    .match-button {
-      background-color: #28a745;
-      color: #ffffff;
-      &:hover {
-        background-color: #218838;
-      }
-    }
-  
-    .loading-spinner {
-      color: #007bff;
-    }
-  
-    .error-message {
-      color: #dc3545;
-      font-weight: bold;
-      margin-top: 10px;
-    }
-  
-    .matched-specialization {
-      margin-top: 20px;
-      color: #007bff;
-      font-weight: bold;
-      font-size: 1.2rem;
+  margin-top: 20px;
+  text-align: center;
+
+  .match-button {
+    background-color: #28a745;
+    color: #ffffff;
+    &:hover {
+      background-color: #218838;
     }
   }
-  
+
+  .loading-spinner {
+    color: #007bff;
+  }
+
+  .error-message {
+    color: #dc3545;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+
+  .matched-specialization {
+    margin-top: 20px;
+    color: #007bff;
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+
+  .lawyer-list {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0 15px;
+
+    .lawyer-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      background-color: #f9f9f9;
+
+      .lawyer-details {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+
+        .lawyer-name {
+          font-weight: bold;
+          font-size: 1.1rem;
+          color: #333;
+        }
+
+        .lawyer-contact {
+          font-size: 0.9rem;
+          color: #555;
+        }
+      }
+
+      .book-button {
+        background-color: #007bff;
+        color: #ffffff;
+        padding: 8px 12px;
+        font-size: 0.9rem;
+        border-radius: 4px;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: #0056b3;
+        }
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+  }
+}
