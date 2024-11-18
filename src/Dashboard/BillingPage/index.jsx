@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { db, collection, getDocs, addDoc, Timestamp } from '../../firebase'; // Import Firebase functions
+import { useSelector } from 'react-redux';
 
 const BillingPage = () => {
   const [openDialog, setOpenDialog] = useState(false);
@@ -26,6 +27,8 @@ const BillingPage = () => {
   });
   const [billingData, setBillingData] = useState([]);
   const [error, setError] = useState('');
+
+  const userEmail = useSelector((state)=> state.user.data?.email)
 
   // Fetch billing data from Firestore
   useEffect(() => {
@@ -46,6 +49,8 @@ const BillingPage = () => {
     fetchBillingData();
   }, []);
 
+  const filteredBillingData = billingData.filter((billing)=> billing.email === userEmail)
+  console.log("filteredBillingData", filteredBillingData)
   // Open payment dialog with pre-filled form
   const handleOpenDialog = () => {
     setFormData({
@@ -191,7 +196,7 @@ const BillingPage = () => {
 
       {/* DataGrid displaying billing records */}
       <div style={{ height: 400, width: '100%' }}>
-        <DataGrid rows={billingData} columns={columns} pageSize={5} />
+        <DataGrid rows={filteredBillingData} columns={columns} pageSize={5} />
       </div>
 
       {/* Payment Dialog */}
