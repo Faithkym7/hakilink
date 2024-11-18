@@ -4,7 +4,7 @@ import { Header, About, Services, Footer, HowItWorks } from './scenes';
 import { DashboardLayout, Error404, Navbar } from './components';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Login, Signup } from './auth';
-import { DashboardOverview, LawyerCasesPage, LegalHelp, ProfilePage, AppointmentPage, ClientAppointmentPage } from './Dashboard';
+import { DashboardOverview, LawyerCasesPage, LegalHelp, ProfilePage, AppointmentPage, ClientAppointmentPage , BillingPage} from './Dashboard';
 
 function App() {
   return (
@@ -37,6 +37,7 @@ function App() {
             <Route path = '/Client-cases' element={<LawyerCasesPage/>}/>
             <Route path = '/Appointment-page' element ={<AppointmentPage/>}/>
             <Route path = '/Clients' element ={<ClientAppointmentPage/>}/>
+            <Route path = '/Billing' element ={<BillingPage/>}/>
           </Route>
         </Routes>
       </div>

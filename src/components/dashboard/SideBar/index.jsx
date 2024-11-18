@@ -7,6 +7,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import PeopleIcon from '@mui/icons-material/People';
 import LogoutIcon from '@mui/icons-material/Logout';
 import WorkIcon from '@mui/icons-material/Work';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { useNavigate, useLocation } from 'react-router-dom'; // Import useNavigate and useLocation
 import { useSelector } from 'react-redux';  // Import useSelector to access the user's role from Redux
@@ -28,14 +29,15 @@ const Sidebar = ({ open, toggleSidebar }) => {
         { text: 'Legal Help', icon: <Diversity1Icon />, path: '/Legal-help' },
         { text: 'Appointments', icon: <CalendarMonthIcon/>, path: '/Appointment-page' },
         { text: 'Cases', icon: <WorkIcon />, path: '/Client-cases' },
-        { text: 'Clients', icon: <PeopleIcon />, path: '/Clients' },        
-        { text: 'Logout', icon: <LogoutIcon />, path: '/log-in' }
+        { text: 'Clients', icon: <PeopleIcon />, path: '/Clients' }, 
+        {text:'Billing' ,icon:<AccountBalanceWalletIcon/>, path:'/Billing' },               
+        { text: 'Logout', icon: <LogoutIcon />, path: '/log-in' },
     ];
 
     // Filter menu items based on the user's role
     const filteredMenuItems = menuItems.filter(item => {
         if (userRole === 'user') {
-            return item.text !== 'Cases' && item.text !== 'Clients'; // 'user' cannot see Cases or Clients
+            return item.text !== 'Cases' && item.text !== 'Clients' && item.text!=='Billing'; // 'user' cannot see Cases or Clients
         }
         if (userRole === 'lawyer') {
             return item.text !== 'Legal Help'; // 'lawyer' cannot see Legal Help

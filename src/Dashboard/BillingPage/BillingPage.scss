@@ -1,0 +1,143 @@
+// BillingPage and PaymentForm Styles
+
+// Container for the billing page
+.billing-page {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    max-width: 600px;
+    margin: 0 auto;
+  
+    h2 {
+      font-size: 2rem;
+      color: #333;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+  
+      label {
+        font-size: 1rem;
+        color: #333;
+        margin-bottom: 5px;
+      }
+  
+      input {
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        outline: none;
+        transition: border 0.3s ease;
+  
+        &:focus {
+          border-color: #007bff;
+        }
+      }
+  
+      button {
+        padding: 12px 20px;
+        font-size: 1rem;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+  
+        &:hover {
+          background-color: #0056b3;
+        }
+  
+        &:disabled {
+          background-color: #ddd;
+          cursor: not-allowed;
+        }
+      }
+  
+      .error {
+        color: red;
+        font-size: 0.875rem;
+        margin-top: -10px;
+      }
+    }
+  
+    .payment-form {
+      margin-top: 20px;
+      text-align: center;
+  
+      button {
+        padding: 12px 20px;
+        font-size: 1rem;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+  
+        &:hover {
+          background-color: #218838;
+        }
+  
+        &:disabled {
+          background-color: #ddd;
+          cursor: not-allowed;
+        }
+      }
+  
+      .loading,
+      .payment-status {
+        font-size: 1rem;
+        margin-top: 15px;
+      }
+  
+      .error {
+        color: red;
+      }
+    }
+  }
+  
+  // Utility for form field grouping
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  
+    label {
+      font-size: 0.875rem;
+      color: #555;
+    }
+  
+    input {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      outline: none;
+      font-size: 1rem;
+  
+      &:focus {
+        border-color: #007bff;
+      }
+    }
+  }
+  
+  // Loading spinner (if needed)
+  .spinner {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #007bff;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  

@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
-import {getFirestore, getDocs, collection, query, where} from 'firebase/firestore';
+import {getFirestore, addDoc, getDocs, collection, query, where, Timestamp} from 'firebase/firestore';
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -22,4 +22,4 @@ const db = getFirestore(app);
 
 const analytics = typeof window !== "undefined" ? getAnalytics(app) : null; // Optional check for analytics in non-browser environments
 
-export { auth, analytics , db, collection, getDocs, query, where};
+export { auth, analytics , db, collection, getDocs, query, where, addDoc, Timestamp};
