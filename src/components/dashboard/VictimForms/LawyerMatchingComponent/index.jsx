@@ -5,8 +5,8 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { db } from '../../../../firebase';
 import { collection, query, where, getDocs, addDoc } from 'firebase/firestore';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 
+import FeedbackForm from '../FeedbackForm';
 // Ensure that you have your API key set up securely in .env file
 const apiKey = process.env.REACT_APP_GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(apiKey);
@@ -16,7 +16,8 @@ const LawyerMatchingComponent = ({ situation }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [lawyers, setLawyers] = useState([]);
-  const navigate = useNavigate();
+  const [bookedCaseId, setBookedCaseId] = useState(null);
+
 
   const user = useSelector((state) => state.user.data);
 
@@ -28,11 +29,24 @@ const LawyerMatchingComponent = ({ situation }) => {
     try {
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
+      const casesQuery = await getDocs(collection(db, "cases"));
+      const pastCases = casesQuery.docs.map(doc => doc.data());
+
+      const specializationSuccess = {};
+        pastCases.forEach(c => {
+            if (c.match_success === 1) {
+                specializationSuccess[c.specialization] = (specializationSuccess[c.specialization] || 0) + 1;
+            }
+        });
+
       const prompt = `
         Analyze the following legal situation and recommend the most suitable legal specialization.
 
         Situation: "${situation}"
 
+        Based on past cases, here are the specialization success rates:
+            ${Object.entries(specializationSuccess).map(([spec, count]) => `${spec}: ${count} successful cases`).join("\n")}
+            
         Available Specializations:
         1. Criminal Law
         2. Civil Law
@@ -42,7 +56,7 @@ const LawyerMatchingComponent = ({ situation }) => {
         6. Intellectual Property Law
         7. Business Law
 
-        Please respond with the most appropriate legal specialization based on the situation.
+        Choose the most appropriate legal specialization for this case.
       `;
 
       const result = await model.generateContent(prompt);
@@ -65,7 +79,7 @@ const LawyerMatchingComponent = ({ situation }) => {
 
         setMatchedSpecialization(matched);
 
-        if (matched !== 'No suitable specialization found.') {
+        if (matched !== 'Kindly give a better description of your situation') {
           fetchLawyers(matched);
         } else {
           setError('No suitable specialization found.');
@@ -93,7 +107,23 @@ const LawyerMatchingComponent = ({ situation }) => {
       );
       
       const querySnapshot = await getDocs(q);
-      const lawyerList = querySnapshot.docs.map(doc => doc.data());
+      let lawyerList = querySnapshot.docs.map(doc => doc.data());
+
+      const casesQuery = await getDocs(collection(db, "cases"));
+      const pastCases = casesQuery.docs.map(doc => doc.data());
+
+      lawyerList = lawyerList.map(lawyer => {
+        const lawyerCases = pastCases.filter(c => c.lawyerEmail === lawyer.email);
+        const successCount = lawyerCases.filter(c => c.match_success === 1).length;
+        const totalCount = lawyerCases.length;
+        const successRate = totalCount > 0 ? successCount / totalCount : 0;
+
+        return { ...lawyer, successRate };
+      });
+
+      // Sort lawyers by success rate (highest first)
+      lawyerList.sort((a, b) => b.successRate - a.successRate);
+
       setLawyers(lawyerList);
 
     } catch (error) {
@@ -104,21 +134,26 @@ const LawyerMatchingComponent = ({ situation }) => {
 
   const handlebooking = async(lawyer)=>{    
     try {
-      await addDoc(collection(db, "cases"), {
+      const docRef = await addDoc(collection(db, "cases"), {
         userName: user.name,
         userEmail: user.email,
         situation,
         lawyerName: lawyer.name,
         lawyerPhone: lawyer.phone,
         lawyerEmail: lawyer.email,
+        feedback: null,
+        match_success: null,
       });
-      alert("Booking successful!");
-      navigate('/Appointment-page')
+      console.log("Document written with ID: ", docRef.id);
+      setBookedCaseId(docRef.id);
+      alert("Booking successful! PLease provide feedback after the consultation.");
+      //navigate('/Appointment-page')
     } catch (err) {
       setError("Error occurred while booking the lawyer.");
       console.error("Booking error:", err);
     }
   }
+ 
   return (
     <Box>
       <Button variant="contained" color="primary" onClick={handleMatch} disabled={loading}>
@@ -126,7 +161,7 @@ const LawyerMatchingComponent = ({ situation }) => {
       </Button>
 
       {error && <Typography color="error" marginTop={2}>{error}</Typography>}
-
+      
       {matchedSpecialization && (
         <Typography variant="h6" marginTop={2}>
           Recommended Specialization: {matchedSpecialization}
@@ -152,6 +187,15 @@ const LawyerMatchingComponent = ({ situation }) => {
           ))}
         </List>
       )}
+      {bookedCaseId ? (
+      <>
+        <p>Rendering Feedback Form with ID: {bookedCaseId}</p>
+        <FeedbackForm caseId={bookedCaseId} />
+      </>
+    ) : (
+      <p>No booked case yet</p>
+    )}
+
     </Box>
   );
 };

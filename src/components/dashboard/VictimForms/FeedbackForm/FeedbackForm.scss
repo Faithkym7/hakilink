@@ -1,0 +1,28 @@
+.feedback-form {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  
+    
+  
+    .input-field {
+      margin-bottom: 15px;
+    }
+  
+    .error-text {
+      color: red;
+      font-size: 14px;
+      text-align: center;
+      margin-top: 10px;
+    }
+  
+    .submit-button {
+      display: block;
+      width: 100%;
+      margin-top: 15px;
+    }
+  }
+  

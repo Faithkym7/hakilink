@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Button, Box, Typography, Paper, Alert } from '@mui/material';
+import { TextField, Button, Box, Typography, Paper, Alert, useMediaQuery } from '@mui/material';
 import { db } from '../../../../firebase';
 import { collection, addDoc, query, where, orderBy, limit, getDocs } from 'firebase/firestore';
 import LawyerMatchingComponent from '../LawyerMatchingComponent'; // Import the matching component
@@ -7,6 +7,7 @@ import './VictimSituationForm.scss';
 import { useSelector } from 'react-redux';
 
 const VictimSituationForm = () => {
+  const md = useMediaQuery('(min-width:600px)');
   const name = useSelector((state) => state.user.data.name);
   const contact = useSelector((state) => state.user.data.email);  // Using email as unique identifier
   const [situation, setSituation] = useState('');
@@ -77,7 +78,8 @@ const VictimSituationForm = () => {
   };
 
   return (
-    <Box display="flex" justifyContent="center">
+    <Box display="flex" flexDirection={md ? "column" : "row"} justifyContent="center">
+
       <Paper elevation={3} className="form-container">
         <Typography variant="h5" align="center" gutterBottom>
           Describe Your Situation
@@ -137,11 +139,12 @@ const VictimSituationForm = () => {
           </Alert>
         )}
 
-        {/* Display the LawyerMatchingComponent only if form is successfully submitted */}
-        {showMatchingComponent && latestSituation && (
+        
+      </Paper>
+      {/* Display the LawyerMatchingComponent only if form is successfully submitted */}
+      {showMatchingComponent && latestSituation && (
           <LawyerMatchingComponent situation={latestSituation} />
         )}
-      </Paper>
     </Box>
   );
 };
